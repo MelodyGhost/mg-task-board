@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
+import React, { Dispatch, useEffect, useState } from 'react';
+import { useTaskState } from '../../store/hooks/use-task-state';
+import { Actions, ActionTypes, ITaskBoardState } from '../../store/types';
+import { randIdGenerator } from '../the-list';
 
-const CreateList = () => {
+interface ICreateList {
+  state: ITaskBoardState;
+  dispatch: Dispatch<Actions>;
+}
+
+const CreateList: React.FC<ICreateList> = ({ state, dispatch }) => {
   const [createListOpen, setCreateListOpen] = useState(false);
   const [input, setInput] = useState('');
 
   const createList = () => {
-    console.log('Entered Input Is: ' + input);
+    dispatch({
+      type: ActionTypes.CREATE_LIST,
+      payload: { id: randIdGenerator(), listName: input },
+    });
     setInput('');
   };
 
@@ -23,7 +34,7 @@ const CreateList = () => {
         <div>
           <input
             type="text"
-            className="p-2 border"
+            className="p-2 mx-1 my-3 border"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && createList()}

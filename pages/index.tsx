@@ -1,12 +1,19 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useEffect, useState, createContext } from 'react';
 import CreateList from '../src/components/create-list';
-import { initialStore } from '../src/store/hooks/use-task-state';
+import TheList from '../src/components/the-list';
+import { initialStore, useTaskState } from '../src/store/hooks/use-task-state';
 import styles from '../styles/Home.module.css';
 
+// import StateProvider = createContext()
+
 const Home: NextPage = () => {
-  const [store, setStore] = useState(initialStore);
+  const { state, dispatch } = useTaskState();
+
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
   return (
     <div className={styles.container}>
       <Head>
@@ -14,7 +21,12 @@ const Home: NextPage = () => {
         <meta name="description" content="Keep tracks of your work" />
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <CreateList />
+      <div className="flex gap-3">
+        {state.lists.allIds.map((list) => {
+          return <TheList key={list} id={list} {...{ state, dispatch }} />;
+        })}
+        <CreateList {...{ state, dispatch }} />
+      </div>
     </div>
   );
 };

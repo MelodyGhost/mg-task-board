@@ -1,4 +1,4 @@
-interface IList {
+export interface IList {
   id: string;
   listName: string;
   cards: string[];

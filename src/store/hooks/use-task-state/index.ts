@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { Actions, ActionTypes, ITaskBoardState } from '../../types';
 import produce from 'immer';
 
@@ -8,15 +8,15 @@ export const initialStore: ITaskBoardState = {
       list1: {
         id: 'list1',
         listName: 'list 1',
-        cards: ['card1', 'cards2'],
+        cards: ['card1', 'card2'],
       },
       list2: {
         id: 'list2',
         listName: 'list 2',
-        cards: [],
+        cards: ['card3', 'card4'],
       },
     },
-    allIds: ['list1'],
+    allIds: ['list1', 'list2'],
   },
   cards: {
     byId: {
@@ -30,8 +30,18 @@ export const initialStore: ITaskBoardState = {
         title: 'some other item',
         locked: true,
       },
+      card3: {
+        id: 'card3',
+        title: 'some more item',
+        locked: false,
+      },
+      card4: {
+        id: 'card4',
+        title: 'more and more item',
+        locked: false,
+      },
     },
-    allIds: ['card1', 'card2'],
+    allIds: ['card1', 'card2', 'card3', 'card4'],
   },
 };
 
@@ -40,6 +50,7 @@ const taskReducer = produce(
     switch (type) {
       case ActionTypes.CREATE_LIST: {
         const { id, listName } = payload;
+        console.log(payload);
         state.lists.byId[id] = { id, listName, cards: [] };
         state.lists.allIds.push(id);
         return state;
@@ -63,9 +74,10 @@ const taskReducer = produce(
         return state;
       }
       case ActionTypes.CREATE_CARD: {
-        const { id, title } = payload;
+        const { id, title, listId } = payload;
         state.cards.byId[id] = { id, title, locked: false };
         state.cards.allIds.push(id);
+        state.lists.byId[listId].cards.push(id);
         return state;
       }
       case ActionTypes.RENAME_CARD: {
@@ -101,5 +113,5 @@ const taskReducer = produce(
 export const useTaskState = () => {
   const [state, dispatch] = useReducer(taskReducer, initialStore);
 
-  return {};
+  return { state, dispatch };
 };
