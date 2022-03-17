@@ -8,7 +8,7 @@ interface IListById {
   [key: string]: IList;
 }
 
-interface ICard {
+export interface ICard {
   id: string;
   title: string;
   locked: boolean;
@@ -67,7 +67,7 @@ export interface RenameCardAction {
 
 export interface DeleteCardAction {
   type: ActionTypes.DELETE_CARD;
-  payload: string;
+  payload: { id: string; listId: string };
 }
 
 export interface ToggleLockAction {

@@ -86,8 +86,13 @@ const taskReducer = produce(
         return state;
       }
       case ActionTypes.DELETE_CARD: {
-        delete state.cards.byId[payload];
-        state.cards.allIds = state.cards.allIds.filter((id) => id !== payload);
+        delete state.cards.byId[payload.id];
+        state.cards.allIds = state.cards.allIds.filter(
+          (id) => id !== payload.id
+        );
+        state.lists.byId[payload.listId].cards = state.lists.byId[
+          payload.listId
+        ].cards.filter((card) => card !== payload.id);
         return state;
       }
       case ActionTypes.TOGGLE_LOCK: {

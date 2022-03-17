@@ -21,7 +21,7 @@ const Home: NextPage = () => {
         <meta name="description" content="Keep tracks of your work" />
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <div className="flex gap-3">
+      <div className="flex gap-3 flex-wrap">
         {state.lists.allIds.map((list) => {
           return <TheList key={list} id={list} {...{ state, dispatch }} />;
         })}
