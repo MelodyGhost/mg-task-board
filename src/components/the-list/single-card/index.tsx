@@ -32,10 +32,17 @@ const SingleCard: React.FC<ISingleCard> = ({ card, listId, dispatch }) => {
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     console.log('drag started');
+    (e.target as HTMLDivElement).style.opacity = '0.3';
     e.dataTransfer.setData(
       'text/plain',
       JSON.stringify({ id: card.id, listId })
     );
+  };
+
+  const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
+    if (e.target) {
+      (e.target as HTMLDivElement).style.opacity = '1';
+    }
   };
 
   useEffect(() => {
@@ -48,7 +55,8 @@ const SingleCard: React.FC<ISingleCard> = ({ card, listId, dispatch }) => {
     <div
       draggable={!card.locked}
       onDragStart={(e) => handleDragStart(e)}
-      className="border p-2 mt-2"
+      onDragEnd={handleDragEnd}
+      className="border p-2 transition-all"
     >
       {editMode && (
         <input
@@ -72,13 +80,14 @@ const SingleCard: React.FC<ISingleCard> = ({ card, listId, dispatch }) => {
             {card.locked ? '🔒' : '🔓'}
           </button>
           <div
+            className="transition-all"
             style={{ flex: 0.8, userSelect: 'none' }}
             onDoubleClick={() => setEditmode(true)}
           >
             {renameInput}
           </div>
           <button
-            className="bg-red-500"
+            className="bg-red-500 h-fit"
             onClick={deleteCard}
             style={{ flex: 0.1 }}
           >

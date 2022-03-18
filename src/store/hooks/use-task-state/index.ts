@@ -100,13 +100,14 @@ const taskReducer = produce(
         return state;
       }
       case ActionTypes.MOVE_CARD: {
-        const { id, fromList, toList } = payload;
+        const { id, fromList, toList, position } = payload;
         // Remove from list
         state.lists.byId[fromList].cards = state.lists.byId[
           fromList
         ].cards.filter((card) => card !== id);
+        console.log(position);
         // Add to new list
-        state.lists.byId[toList].cards.push(id);
+        state.lists.byId[toList].cards.splice(position, 0, id);
         return state;
       }
       default:

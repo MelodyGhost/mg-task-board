@@ -77,7 +77,7 @@ export interface ToggleLockAction {
 
 export interface MoveCardAction {
   type: ActionTypes.MOVE_CARD;
-  payload: { id: string; fromList: string; toList: string };
+  payload: { id: string; fromList: string; toList: string; position: number };
 }
 
 export type Actions =

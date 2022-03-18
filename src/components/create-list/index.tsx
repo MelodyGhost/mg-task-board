@@ -21,7 +21,7 @@ const CreateList: React.FC<ICreateList> = ({ state, dispatch }) => {
   };
 
   return (
-    <div className="p-4 border-2 rounded-md w-60">
+    <div className="p-4 border-2 rounded-md w-60 h-fit">
       {!createListOpen && (
         <button
           className="border px-2 py-1"
