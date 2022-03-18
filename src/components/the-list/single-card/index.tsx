@@ -1,4 +1,4 @@
-import { Dispatch, useState } from 'react';
+import { Dispatch, useEffect, useState, useCallback } from 'react';
 import { Actions, ActionTypes, ICard } from '../../../store/types';
 
 interface ISingleCard {
@@ -10,7 +10,7 @@ const SingleCard: React.FC<ISingleCard> = ({ card, listId, dispatch }) => {
   const [editMode, setEditmode] = useState(false);
   const [renameInput, setRenameInput] = useState(card.title);
 
-  const renameList = () => {
+  const renameCard = () => {
     if (!renameInput.trim().length) return;
     dispatch({
       type: ActionTypes.RENAME_CARD,
@@ -29,24 +29,51 @@ const SingleCard: React.FC<ISingleCard> = ({ card, listId, dispatch }) => {
       payload: { id: card.id, listId },
     });
   };
+
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    console.log('drag started');
+    e.dataTransfer.setData(
+      'text/plain',
+      JSON.stringify({ id: card.id, listId })
+    );
+  };
+
+  useEffect(() => {
+    window.addEventListener('focusout', renameCard.bind(this));
+    return window.removeEventListener('focusout', renameCard);
+  }, []);
+
   return (
-    <div draggable={!card.locked} className="border p-2 mt-2">
+    <div
+      draggable={!card.locked}
+      onDragStart={(e) => handleDragStart(e)}
+      className="border p-2 mt-2"
+    >
       {editMode && (
         <input
           type="text"
           value={renameInput}
+          className="p-1 rounded-sm"
+          autoFocus
           onChange={(e) => {
             setRenameInput(e.target.value);
           }}
-          onKeyDown={(e) => e.key === 'Enter' && renameList()}
+          onKeyDown={(e) => e.key === 'Enter' && renameCard()}
         />
       )}
       {!editMode && (
-        <div className="flex">
+        <div
+          className={`flex ${
+            card.locked ? 'opacity-50' : 'opacity-100 cursor-pointer'
+          }`}
+        >
           <button onClick={toggleLock} style={{ flex: 0.1, paddingRight: 5 }}>
             {card.locked ? '🔒' : '🔓'}
           </button>
-          <div style={{ flex: 0.8 }} onDoubleClick={() => setEditmode(true)}>
+          <div
+            style={{ flex: 0.8, userSelect: 'none' }}
+            onDoubleClick={() => setEditmode(true)}
+          >
             {renameInput}
           </div>
           <button

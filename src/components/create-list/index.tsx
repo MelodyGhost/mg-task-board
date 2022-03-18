@@ -1,6 +1,6 @@
 import React, { Dispatch, useEffect, useState } from 'react';
 import { Actions, ActionTypes, ITaskBoardState } from '../../store/types';
-import { randIdGenerator } from '../the-list';
+import { randIdGenerator } from '../../utils/idGenerator';
 
 interface ICreateList {
   state: ITaskBoardState;
@@ -37,6 +37,7 @@ const CreateList: React.FC<ICreateList> = ({ state, dispatch }) => {
             className="p-2 mx-1 my-3 border"
             value={input}
             placeholder={'Give your list a name...'}
+            autoFocus
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && createList()}
           />

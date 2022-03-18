@@ -1,11 +1,6 @@
-import React, { Dispatch, useEffect, useState } from 'react';
-import {
-  Actions,
-  ActionTypes,
-  ICard,
-  IList,
-  ITaskBoardState,
-} from '../../store/types';
+import React, { Dispatch } from 'react';
+import { Actions, ActionTypes, ITaskBoardState } from '../../store/types';
+import AddCard from './add-card';
 import ListName from './list-name';
 import SingleCard from './single-card';
 
@@ -16,20 +11,28 @@ interface ITheList {
 }
 
 const TheList: React.FC<ITheList> = ({ id, state, dispatch }) => {
-  const [cardInput, setCardInput] = useState('');
-  const [createCardOpen, setCreateCardOpen] = useState(false);
-  const createCard = (cardId: string) => {
-    if (!cardInput.trim().length) return;
+  const handledDragOver = (ev: React.DragEvent<HTMLDivElement>) => {
+    ev.preventDefault();
+  };
+
+  const handleDrop = (ev: React.DragEvent<HTMLDivElement>) => {
+    const stringData = ev.dataTransfer.getData('text/plain');
+    const data = JSON.parse(stringData) as { id: string; listId: string };
+
+    if (data.listId === id) return;
 
     dispatch({
-      type: ActionTypes.CREATE_CARD,
-      payload: { id: cardId, listId: id, title: cardInput },
+      type: ActionTypes.MOVE_CARD,
+      payload: { id: data.id, fromList: data.listId, toList: id },
     });
-    setCardInput('');
   };
 
   return (
-    <div className="border-2 rounded-md bg-slate-100 shadow-sm w-60">
+    <div
+      className="border-2 rounded-md bg-slate-100 shadow-sm w-60"
+      onDragOver={handledDragOver}
+      onDrop={handleDrop}
+    >
       <ListName list={state.lists.byId[id]} dispatch={dispatch} />
       <div className="p-2">
         <div>
@@ -44,42 +47,10 @@ const TheList: React.FC<ITheList> = ({ id, state, dispatch }) => {
             );
           })}
         </div>
-        {!createCardOpen && (
-          <button onClick={() => setCreateCardOpen(true)}>+ Add Card</button>
-        )}
-        {createCardOpen && (
-          <div>
-            <input
-              type="text"
-              className="p-2 mx-1 my-3 border"
-              value={cardInput}
-              placeholder="Enter a card title..."
-              onChange={(e) => setCardInput(e.target.value)}
-              onKeyDown={(e) =>
-                e.key === 'Enter' && createCard(randIdGenerator())
-              }
-            />
-            <div className="flex gap-4">
-              <button
-                className="border px-2 py-1"
-                onClick={() => createCard(randIdGenerator())}
-              >
-                Add Card
-              </button>
-              <button
-                className="border px-2 py-1"
-                onClick={() => setCreateCardOpen(false)}
-              >
-                X
-              </button>
-            </div>
-          </div>
-        )}
+        <AddCard {...{ listId: id, dispatch }} />
       </div>
     </div>
   );
 };
 
 export default TheList;
-
-export const randIdGenerator = () => Math.random().toString(36).slice(2, 8);
