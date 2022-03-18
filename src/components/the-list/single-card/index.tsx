@@ -39,8 +39,9 @@ const SingleCard: React.FC<ISingleCard> = ({ card, listId, dispatch }) => {
   };
 
   useEffect(() => {
-    window.addEventListener('focusout', renameCard.bind(this));
-    return window.removeEventListener('focusout', renameCard);
+    const cancelEdit = () => setEditmode(false);
+    window.addEventListener('focusout', cancelEdit.bind(this));
+    return window.removeEventListener('focusout', cancelEdit);
   }, []);
 
   return (

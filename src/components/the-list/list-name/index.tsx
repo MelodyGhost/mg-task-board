@@ -28,8 +28,9 @@ const ListName: React.FC<IListName> = ({ list, dispatch }) => {
   };
 
   useEffect(() => {
-    window.addEventListener('focusout', renameList.bind(this));
-    return window.removeEventListener('focusout', renameList);
+    const cancelEdit = () => setEditmode(false);
+    window.addEventListener('focusout', cancelEdit.bind(this));
+    return window.removeEventListener('focusout', cancelEdit);
   }, []);
 
   return (
