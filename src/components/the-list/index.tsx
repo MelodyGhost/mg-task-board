@@ -60,13 +60,18 @@ const TheList: React.FC<ITheList> = ({ id, state, dispatch }) => {
           {state.lists.byId[id].cards.map((card, index) => {
             return (
               <div key={card} className="transition-all">
-                <div
+                {/* <div
                   className="opacity-0 h-2 transition-all"
                   onDragEnter={(ev) => handleDragEnter(ev, index)}
                   onDragLeave={handleDragLeave}
                 >
                   .
-                </div>
+                </div> */}
+                <DragPlace
+                  handleDragEnter={handleDragEnter}
+                  handleDragLeave={handleDragLeave}
+                  position={index}
+                />
                 <SingleCard
                   // key={card}
                   card={state.cards.byId[card]}
@@ -76,15 +81,11 @@ const TheList: React.FC<ITheList> = ({ id, state, dispatch }) => {
               </div>
             );
           })}
-          <div
-            className="opacity-0 h-1 transition-all"
-            onDragEnter={(ev) =>
-              handleDragEnter(ev, state.lists.byId[id].cards.length)
-            }
-            onDragLeave={handleDragLeave}
-          >
-            .
-          </div>
+          <DragPlace
+            handleDragEnter={handleDragEnter}
+            handleDragLeave={handleDragLeave}
+            position={state.lists.byId[id].cards.length}
+          />
         </div>
         <AddCard {...{ listId: id, dispatch }} />
       </div>
@@ -93,3 +94,24 @@ const TheList: React.FC<ITheList> = ({ id, state, dispatch }) => {
 };
 
 export default TheList;
+
+interface IDragPlace {
+  handleDragEnter: (ev: React.DragEvent<HTMLDivElement>, key: number) => void;
+  handleDragLeave: (ev: React.DragEvent) => void;
+  position: number;
+}
+const DragPlace: React.FC<IDragPlace> = ({
+  handleDragEnter,
+  handleDragLeave,
+  position,
+}) => {
+  return (
+    <div
+      className="opacity-0 h-2 transition-all"
+      onDragEnter={(ev) => handleDragEnter(ev, position)}
+      onDragLeave={(e) => handleDragLeave(e)}
+    >
+      .
+    </div>
+  );
+};
