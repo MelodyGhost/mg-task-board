@@ -24,7 +24,7 @@ const CreateList: React.FC<ICreateList> = ({ state, dispatch }) => {
     <div className="p-4 border-2 rounded-md w-60 h-fit">
       {!createListOpen && (
         <button
-          className="border px-2 py-1"
+          className="border px-2 py-1 opacity-75 rounded"
           onClick={() => setCreateListOpen(true)}
         >
           + CreateList
@@ -43,7 +43,7 @@ const CreateList: React.FC<ICreateList> = ({ state, dispatch }) => {
           />
           <div className="flex gap-4">
             <button
-              className="border px-2 py-1"
+              className="border px-2 py-1 bg-slate-800 text-white rounded-md"
               type="submit"
               onClick={createList}
             >

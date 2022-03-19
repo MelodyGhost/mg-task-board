@@ -34,8 +34,7 @@ const AddCard: React.FC<IAddCard> = ({ dispatch, listId }) => {
       )}
       {createCardOpen && (
         <div>
-          <input
-            type="text"
+          <textarea
             className="p-2 mx-1 my-3 border"
             value={cardInput}
             placeholder="Enter a card title..."

@@ -48,7 +48,7 @@ const ListName: React.FC<IListName> = ({ list, dispatch }) => {
         />
       )}
       {!editMode && (
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <strong
             className="flex-grow opacity-75"
             onDoubleClick={() => setEditmode(true)}
@@ -56,11 +56,11 @@ const ListName: React.FC<IListName> = ({ list, dispatch }) => {
             {textInput}
           </strong>
           <button
-            className="border px-2 text-red-600"
+            className="border p-1 text-red-600"
             style={{ flex: 0.2 }}
             onClick={deleteList}
           >
-            X
+            ❌
           </button>
         </div>
       )}
