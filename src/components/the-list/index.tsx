@@ -1,6 +1,7 @@
 import React, { Dispatch, EventHandler, useRef } from 'react';
 import { Actions, ActionTypes, ITaskBoardState } from '../../store/types';
 import AddCard from './add-card';
+import DragPlace from './drag-place';
 import ListName from './list-name';
 import SingleCard from './single-card';
 
@@ -11,7 +12,6 @@ interface ITheList {
 }
 
 const TheList: React.FC<ITheList> = ({ id, state, dispatch }) => {
-  const ref = useRef<HTMLDivElement>(null);
   let position: number = state.lists.byId[id].cards.length;
   let lastDrag: HTMLDivElement | undefined;
 
@@ -55,22 +55,14 @@ const TheList: React.FC<ITheList> = ({ id, state, dispatch }) => {
       onDrop={handleDrop}
     >
       <ListName list={state.lists.byId[id]} dispatch={dispatch} />
-      <div className="p-2" ref={ref}>
+      <div className="p-2">
         <div>
           {state.lists.byId[id].cards.map((card, index) => {
             return (
               <div key={card} className="transition-all">
-                {/* <div
-                  className="opacity-0 h-2 transition-all"
-                  onDragEnter={(ev) => handleDragEnter(ev, index)}
-                  onDragLeave={handleDragLeave}
-                >
-                  .
-                </div> */}
                 <DragPlace
-                  handleDragEnter={handleDragEnter}
+                  handleDragEnter={(ev) => handleDragEnter(ev, index)}
                   handleDragLeave={handleDragLeave}
-                  position={index}
                 />
                 <SingleCard
                   // key={card}
@@ -82,9 +74,10 @@ const TheList: React.FC<ITheList> = ({ id, state, dispatch }) => {
             );
           })}
           <DragPlace
-            handleDragEnter={handleDragEnter}
+            handleDragEnter={(ev) =>
+              handleDragEnter(ev, state.lists.byId[id].cards.length)
+            }
             handleDragLeave={handleDragLeave}
-            position={state.lists.byId[id].cards.length}
           />
         </div>
         <AddCard {...{ listId: id, dispatch }} />
@@ -94,24 +87,3 @@ const TheList: React.FC<ITheList> = ({ id, state, dispatch }) => {
 };
 
 export default TheList;
-
-interface IDragPlace {
-  handleDragEnter: (ev: React.DragEvent<HTMLDivElement>, key: number) => void;
-  handleDragLeave: (ev: React.DragEvent) => void;
-  position: number;
-}
-const DragPlace: React.FC<IDragPlace> = ({
-  handleDragEnter,
-  handleDragLeave,
-  position,
-}) => {
-  return (
-    <div
-      className="opacity-0 h-2 transition-all"
-      onDragEnter={(ev) => handleDragEnter(ev, position)}
-      onDragLeave={(e) => handleDragLeave(e)}
-    >
-      .
-    </div>
-  );
-};
