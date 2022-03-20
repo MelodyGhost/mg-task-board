@@ -6,8 +6,6 @@ import TheList from '../src/components/the-list';
 import { initialStore, useTaskState } from '../src/store/hooks/use-task-state';
 import styles from '../styles/Home.module.css';
 
-// import StateProvider = createContext()
-
 const Home: NextPage = () => {
   const { state, dispatch } = useTaskState();
 

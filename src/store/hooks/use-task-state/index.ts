@@ -7,12 +7,12 @@ export const initialStore: ITaskBoardState = {
     byId: {
       list1: {
         id: 'list1',
-        listName: 'list 1',
+        listName: 'Backlog',
         cards: ['card1', 'card2'],
       },
       list2: {
         id: 'list2',
-        listName: 'list 2',
+        listName: 'In Progress',
         cards: ['card3', 'card4'],
       },
     },
@@ -22,22 +22,22 @@ export const initialStore: ITaskBoardState = {
     byId: {
       card1: {
         id: 'card1',
-        title: 'someitem',
+        title: 'Submit project to weDevs',
         locked: false,
       },
       card2: {
         id: 'card2',
-        title: 'some other item',
+        title: 'Complete Task',
         locked: true,
       },
       card3: {
         id: 'card3',
-        title: 'some more item',
+        title: 'Create Prototype',
         locked: false,
       },
       card4: {
         id: 'card4',
-        title: 'more and more item',
+        title: 'Write types and states',
         locked: false,
       },
     },

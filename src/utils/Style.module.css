@@ -1,0 +1,5 @@
+.crossIcon:hover {
+  background: rgb(239, 68, 68);
+  border-radius: 50%;
+  transition: color 0.2s ease;
+}

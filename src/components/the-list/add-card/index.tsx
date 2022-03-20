@@ -24,7 +24,7 @@ const AddCard: React.FC<IAddCard> = ({ dispatch, listId }) => {
     <div className="my-3">
       {!createCardOpen && (
         <button
-          className="p-1 rounded-sm opacity-70 border"
+          className="py-1 px-2 rounded-sm opacity-70 bg-slate-500 text-slate-100"
           onClick={() => {
             setCreateCardOpen(true);
           }}
@@ -35,7 +35,7 @@ const AddCard: React.FC<IAddCard> = ({ dispatch, listId }) => {
       {createCardOpen && (
         <div>
           <textarea
-            className="p-2 mx-1 my-3 border"
+            className="p-2 mx-1 my-3 border w-full"
             value={cardInput}
             placeholder="Enter a card title..."
             autoFocus
@@ -46,13 +46,13 @@ const AddCard: React.FC<IAddCard> = ({ dispatch, listId }) => {
           />
           <div className="flex gap-4">
             <button
-              className="border px-2 py-1 bg-slate-800 text-white rounded-md"
+              className="px-2 py-1 bg-blue-600 text-white rounded-md"
               onClick={() => createCard(randIdGenerator())}
             >
               Add Card
             </button>
             <button
-              className="border px-2 py-1"
+              className="px-2 py-1 text-gray-300"
               onClick={() => setCreateCardOpen(false)}
             >
               X

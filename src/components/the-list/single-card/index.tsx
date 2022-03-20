@@ -1,5 +1,6 @@
 import { Dispatch, useEffect, useState, useCallback } from 'react';
 import { Actions, ActionTypes, ICard } from '../../../store/types';
+import { DeleteIcon, LockIcon, UnlockIcon } from '../../../utils/icons';
 
 interface ISingleCard {
   card: ICard;
@@ -24,6 +25,7 @@ const SingleCard: React.FC<ISingleCard> = ({ card, listId, dispatch }) => {
   };
 
   const deleteCard = () => {
+    if (card.locked) return;
     dispatch({
       type: ActionTypes.DELETE_CARD,
       payload: { id: card.id, listId },
@@ -32,11 +34,12 @@ const SingleCard: React.FC<ISingleCard> = ({ card, listId, dispatch }) => {
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     console.log('drag started');
-    (e.target as HTMLDivElement).style.opacity = '0.3';
+    (e.target as HTMLDivElement).style.opacity = '0.2';
     e.dataTransfer.setData(
       'text/plain',
       JSON.stringify({ id: card.id, listId })
     );
+    e.dataTransfer.effectAllowed = 'move';
   };
 
   const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
@@ -56,13 +59,13 @@ const SingleCard: React.FC<ISingleCard> = ({ card, listId, dispatch }) => {
       draggable={!card.locked}
       onDragStart={(e) => handleDragStart(e)}
       onDragEnd={handleDragEnd}
-      className="border p-2 transition-all"
+      className="rounded p-2 transition-all bg-slate-800"
     >
       {editMode && (
         <input
           type="text"
           value={renameInput}
-          className="p-1 rounded-sm"
+          className="p-1 rounded-sm w-full bg-slate-200"
           autoFocus
           onChange={(e) => {
             setRenameInput(e.target.value);
@@ -72,12 +75,16 @@ const SingleCard: React.FC<ISingleCard> = ({ card, listId, dispatch }) => {
       )}
       {!editMode && (
         <div
-          className={`flex ${
+          className={`flex text-slate-200 ${
             card.locked ? 'opacity-50' : 'opacity-100 cursor-pointer'
           }`}
         >
-          <button onClick={toggleLock} style={{ flex: 0.1, paddingRight: 5 }}>
-            {card.locked ? '🔒' : '🔓'}
+          <button
+            className="w-4 h-4 object-contain"
+            onClick={toggleLock}
+            style={{ flex: 0.1, paddingRight: 5 }}
+          >
+            {card.locked ? <LockIcon /> : <UnlockIcon />}
           </button>
           <div
             className="transition-all"
@@ -87,11 +94,11 @@ const SingleCard: React.FC<ISingleCard> = ({ card, listId, dispatch }) => {
             {renameInput}
           </div>
           <button
-            className="bg-red-500 h-fit"
+            className="h-fit bg-slate-500 rounded-full hover:bg-red-700"
             onClick={deleteCard}
             style={{ flex: 0.1 }}
           >
-            X
+            <DeleteIcon />
           </button>
         </div>
       )}

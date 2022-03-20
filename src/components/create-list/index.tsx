@@ -21,20 +21,20 @@ const CreateList: React.FC<ICreateList> = ({ state, dispatch }) => {
   };
 
   return (
-    <div className="p-4 border-2 rounded-md w-60 h-fit">
+    <div className="p-3 bg-slate-900 rounded-md w-72 h-fit" draggable={false}>
       {!createListOpen && (
         <button
-          className="border px-2 py-1 opacity-75 rounded"
+          className="px-2 py-1 opacity-75 rounded mx-auto bg-slate-600 text-slate-200 w-full"
           onClick={() => setCreateListOpen(true)}
         >
-          + CreateList
+          + Create New List
         </button>
       )}
       {createListOpen && (
         <div>
           <input
             type="text"
-            className="p-2 mx-1 my-3 border"
+            className="p-2 mx-1 my-3 rounded-sm w-full"
             value={input}
             placeholder={'Give your list a name...'}
             autoFocus
@@ -43,14 +43,14 @@ const CreateList: React.FC<ICreateList> = ({ state, dispatch }) => {
           />
           <div className="flex gap-4">
             <button
-              className="border px-2 py-1 bg-slate-800 text-white rounded-md"
+              className="px-2 py-1 bg-green-700 text-white rounded-md"
               type="submit"
               onClick={createList}
             >
-              Save List
+              Add List
             </button>
             <button
-              className="border-2 px-2 py-1"
+              className="text-slate-200 px-2 py-1"
               onClick={() => setCreateListOpen(false)}
             >
               X

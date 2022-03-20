@@ -1,5 +1,6 @@
 import { Dispatch, useEffect, useState } from 'react';
 import { Actions, ActionTypes, IList } from '../../../store/types';
+import { CrossIcon } from '../../../utils/icons';
 
 interface IListName {
   list: IList;
@@ -34,13 +35,13 @@ const ListName: React.FC<IListName> = ({ list, dispatch }) => {
   }, []);
 
   return (
-    <div className="border-b-2 px-2">
+    <div className="px-3 py-1">
       {editMode && (
         <input
           type="text"
           value={textInput}
           autoFocus
-          className="p-1 rounded-sm"
+          className="p-1 rounded-sm bg-slate-200"
           onChange={(e) => {
             setTextInput(e.target.value);
           }}
@@ -48,19 +49,16 @@ const ListName: React.FC<IListName> = ({ list, dispatch }) => {
         />
       )}
       {!editMode && (
-        <div className="flex justify-between items-center">
-          <strong
-            className="flex-grow opacity-75"
-            onDoubleClick={() => setEditmode(true)}
-          >
+        <div className="flex justify-between items-center text-slate-200 tracking-wide">
+          <strong className="flex-grow" onDoubleClick={() => setEditmode(true)}>
             {textInput}
           </strong>
           <button
-            className="border p-1 text-red-600"
+            className="p-1 -mr-5 text-red-700"
             style={{ flex: 0.2 }}
             onClick={deleteList}
           >
-            ❌
+            <CrossIcon />
           </button>
         </div>
       )}

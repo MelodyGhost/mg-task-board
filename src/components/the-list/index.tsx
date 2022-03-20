@@ -22,21 +22,25 @@ const TheList: React.FC<ITheList> = ({ id, state, dispatch }) => {
     ev.preventDefault();
     // (ev.target as HTMLDivElement).textContent = 'Drop Here';
     (ev.target as HTMLDivElement).style.height = '40px';
+    (ev.target as HTMLDivElement).style.opacity = '1';
     position = key;
     lastDrag = ev.target as HTMLDivElement;
   };
 
   const handleDragLeave = (ev: React.DragEvent) => {
     (ev.target as HTMLDivElement).style.height = '8px';
+    (ev.target as HTMLDivElement).style.opacity = '0';
   };
 
   const handledDragOver = (ev: React.DragEvent<HTMLDivElement>) => {
     ev.preventDefault();
+    ev.dataTransfer.dropEffect = 'move';
   };
 
   const handleDrop = (ev: React.DragEvent<HTMLDivElement>) => {
     if (lastDrag) {
       lastDrag.style.height = '8px';
+      lastDrag.style.opacity = '0';
     }
 
     const stringData = ev.dataTransfer.getData('text/plain');
@@ -50,7 +54,7 @@ const TheList: React.FC<ITheList> = ({ id, state, dispatch }) => {
 
   return (
     <div
-      className="border-2 rounded-md bg-slate-100 shadow-sm w-60 h-fit"
+      className="rounded-md bg-black shadow-sm w-72 h-fit"
       onDragOver={handledDragOver}
       onDrop={handleDrop}
     >
