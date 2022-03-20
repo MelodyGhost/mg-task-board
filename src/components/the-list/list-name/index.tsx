@@ -49,7 +49,7 @@ const ListName: React.FC<IListName> = ({ list, dispatch }) => {
         />
       )}
       {!editMode && (
-        <div className="flex justify-between items-center text-slate-200 tracking-wide">
+        <div className="flex justify-between items-center text-slate-200 tracking-wide w-full">
           <strong className="flex-grow" onDoubleClick={() => setEditmode(true)}>
             {textInput}
           </strong>
