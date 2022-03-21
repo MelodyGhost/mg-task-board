@@ -33,7 +33,6 @@ const SingleCard: React.FC<ISingleCard> = ({ card, listId, dispatch }) => {
   };
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    console.log('drag started');
     (e.target as HTMLDivElement).style.opacity = '0.2';
     e.dataTransfer.setData(
       'text/plain',
