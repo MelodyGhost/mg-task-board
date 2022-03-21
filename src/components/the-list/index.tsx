@@ -1,5 +1,5 @@
-import React, { Dispatch, EventHandler, useRef } from 'react';
-import { Actions, ActionTypes, ITaskBoardState } from '../../store/types';
+import React, { Dispatch } from 'react';
+import { Actions, ActionTypes, ITaskBoardState } from '@/store/types';
 import AddCard from './add-card';
 import DragPlace from './drag-place';
 import ListName from './list-name';
@@ -54,7 +54,7 @@ const TheList: React.FC<ITheList> = ({ id, state, dispatch }) => {
 
   return (
     <div
-      className="rounded-md bg-black shadow-sm w-72 h-fit"
+      className="rounded-md bg-black shadow-md w-72 h-fit shadow-orange-900"
       onDragOver={handledDragOver}
       onDrop={handleDrop}
     >

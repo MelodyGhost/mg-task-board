@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import { useReducer } from 'react';
 import { Actions, ActionTypes, ITaskBoardState } from '../../types';
 import produce from 'immer';
 
@@ -50,7 +50,6 @@ const taskReducer = produce(
     switch (type) {
       case ActionTypes.CREATE_LIST: {
         const { id, listName } = payload;
-        console.log(payload);
         state.lists.byId[id] = { id, listName, cards: [] };
         state.lists.allIds.push(id);
         return state;
@@ -105,7 +104,6 @@ const taskReducer = produce(
         state.lists.byId[fromList].cards = state.lists.byId[
           fromList
         ].cards.filter((card) => card !== id);
-        console.log(position);
         // Add to new list
         state.lists.byId[toList].cards.splice(position, 0, id);
         return state;

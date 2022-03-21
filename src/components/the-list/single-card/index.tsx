@@ -1,6 +1,6 @@
 import { Dispatch, useEffect, useState, useCallback } from 'react';
-import { Actions, ActionTypes, ICard } from '../../../store/types';
-import { DeleteIcon, LockIcon, UnlockIcon } from '../../../utils/icons';
+import { Actions, ActionTypes, ICard } from '@/store/types';
+import { DeleteIcon, LockIcon, UnlockIcon } from 'src/utils/components/icons';
 
 interface ISingleCard {
   card: ICard;
@@ -94,9 +94,9 @@ const SingleCard: React.FC<ISingleCard> = ({ card, listId, dispatch }) => {
             {renameInput}
           </div>
           <button
-            className="h-fit bg-slate-500 rounded-full hover:bg-red-700"
+            className="h-fit bg-slate-500 hover:bg-red-700 scale-75"
             onClick={deleteCard}
-            style={{ flex: 0.1 }}
+            style={{ flex: 0.1, borderRadius: '50%' }}
           >
             <DeleteIcon />
           </button>

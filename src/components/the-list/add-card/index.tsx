@@ -1,6 +1,6 @@
 import { Dispatch, useState } from 'react';
-import { Actions, ActionTypes } from '../../../store/types';
-import { randIdGenerator } from '../../../utils/idGenerator';
+import { Actions, ActionTypes } from '@/store/types';
+import { randIdGenerator } from '@/utils/idGenerator';
 
 interface IAddCard {
   listId: string;

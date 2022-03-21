@@ -1,6 +1,6 @@
 import { Dispatch, useEffect, useState } from 'react';
-import { Actions, ActionTypes, IList } from '../../../store/types';
-import { CrossIcon } from '../../../utils/icons';
+import { Actions, ActionTypes, IList } from '@/store/types';
+import { CrossIcon } from 'src/utils/components/icons';
 
 interface IListName {
   list: IList;
@@ -50,7 +50,10 @@ const ListName: React.FC<IListName> = ({ list, dispatch }) => {
       )}
       {!editMode && (
         <div className="flex justify-between items-center text-slate-200 tracking-wide w-full">
-          <strong className="flex-grow" onDoubleClick={() => setEditmode(true)}>
+          <strong
+            className="flex-grow text-ellipsis overflow-hidden whitespace-nowrap"
+            onDoubleClick={() => setEditmode(true)}
+          >
             {textInput}
           </strong>
           <button

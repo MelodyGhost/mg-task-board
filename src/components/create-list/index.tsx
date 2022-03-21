@@ -1,6 +1,6 @@
 import React, { Dispatch, useEffect, useState } from 'react';
-import { Actions, ActionTypes, ITaskBoardState } from '../../store/types';
-import { randIdGenerator } from '../../utils/idGenerator';
+import { Actions, ActionTypes, ITaskBoardState } from '@/store/types';
+import { randIdGenerator } from '@/utils/idGenerator';
 
 interface ICreateList {
   state: ITaskBoardState;
